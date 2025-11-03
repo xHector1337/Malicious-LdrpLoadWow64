@@ -7,9 +7,9 @@ I used [Binary Ninja Free](https://binary.ninja/), [x64dbg](https://x64dbg.com/)
 
 Before going deeper, there are some people that I want to thank:
 
-Thanks to my grandma for raising me as an amazing child,
-Thanks to Mrs Kübra Çakır Erdoğdu and Mr Diego Ledda for always mentoring me,
-Thanks to my sister and our cat Pamuk for supporting me endlessly.
+- Thanks to my grandma for raising me as an amazing child,
+- Thanks to Mrs Kübra Çakır Erdoğdu and Mr Diego Ledda for always mentoring me,
+- Thanks to my sister and our cat Pamuk for supporting me endlessly.
 
 # Description
 <img width="1822" height="816" alt="binja_pseuode-c" src="https://github.com/user-attachments/assets/4251dcb1-0b98-4c23-819b-b9606b489345" />
