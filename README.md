@@ -14,7 +14,7 @@ Thanks to my sister and our cat Pamuk for supporting me endlessly.
 # Description
 <img width="1822" height="816" alt="binja_pseuode-c" src="https://github.com/user-attachments/assets/4251dcb1-0b98-4c23-819b-b9606b489345" />
 
-The Pseudo C code provided by Binary Ninja is shown in the attached photo. At first glance, I thought it was taking a **PWSTR**. The point I was missing was `RtlAppendUnicodeStringToString(&dllName, arg1);` line. Because `RtlAppendUnicodeStringToString` function takes two arguments and both are **PCUNICODE_STRING**. So, that led me to think arg1 is a pointer to **UNICODE_STRING** structure. Then, the function calls `RtlAppendUnicodeToString(&dllName, u"wow64.dll")`. By doing so, it adds `L"wow64.dll"` to the end of the string arg1 stores. My idea was if I have a dll named **wow64.dll** and pass the pointer of the `UNICODE_STRING` structure that holds its path as an argument for **LdrpLoadDll** would end in DLL injection. It did as well.
+The Pseudo C code provided by Binary Ninja is shown in the attached photo. At first glance, I thought it was taking a **PWSTR**. The point I was missing was `RtlAppendUnicodeStringToString(&dllName, arg1);` line. Because `RtlAppendUnicodeStringToString` function takes two arguments and both are **PCUNICODE_STRING**. So, that led me to think arg1 is a pointer to **UNICODE_STRING** structure. Then, the function calls `RtlAppendUnicodeToString(&dllName, u"wow64.dll")`. By doing so, it adds `L"wow64.dll"` to the end of the string arg1 stores. My idea was if I have a dll named **wow64.dll** and pass the pointer of the `UNICODE_STRING` structure that holds its path as an argument for **LdrpLoadWow64**, it would end in DLL injection. It did as well.
 
 ## Bonus Ideas and Contributing
 
