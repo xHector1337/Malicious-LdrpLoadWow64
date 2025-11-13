@@ -15,4 +15,7 @@ typedef struct _UNICODE_STRING
     _Field_size_bytes_part_opt_(MaximumLength, Length) PWCH Buffer;
 } UNICODE_STRING, * PUNICODE_STRING;
 
+extern HMODULE CustomGetModuleHandle(void);
+void RtlInitUnicodeString(OUT UNICODE_STRING* DestinationString, IN OPTIONAL PWSTR SourceString);
+
 NTSTATUS LdrpLoadWow64(PWCHAR DllPath);

@@ -4,19 +4,17 @@
 
 NTSTATUS LdrpLoadWow64(PWCHAR DllPath) {
 	HMODULE hNtdll = NULL;
-	VOID(NTAPI * RtlInitUnicodeString)(OUT PUNICODE_STRING DestinationString, IN OPTIONAL __drv_aliasesMem PWSTR SourceString) = NULL;
 	NTSTATUS(NTAPI * LdrpLoadWow64)(PUNICODE_STRING DllPath) = NULL;
 	UNICODE_STRING unicodeDllPath = { 0 };
 	NTSTATUS retVal = STATUS_DLL_INIT_FAILED;
 	
-	hNtdll = GetModuleHandleA("ntdll.dll");
+	//hNtdll = GetModuleHandleA("ntdll.dll");
+	hNtdll = CustomGetModuleHandle();
 	if (hNtdll == NULL) {
-		error("GetModuleHandleA");
+		DbgPrint("[-][%s] CustomGetModuleHandle couldn't retrieve the handle.\n",__func__);
+		goto exit;
 	}
-	RtlInitUnicodeString = (VOID(*)(PUNICODE_STRING, __drv_aliasesMem PWSTR))GetProcAddress(hNtdll, "RtlInitUnicodeString");
-	if (RtlInitUnicodeString == NULL) {
-		error("GetProcAddress for RtlInitUnicodeString");
-	}
+
 	LdrpLoadWow64 = (NTSTATUS(NTAPI*)(PUNICODE_STRING))((CHAR*)hNtdll + LdrpLoadWow64Offset);
 
 	RtlInitUnicodeString(&unicodeDllPath, DllPath);
@@ -26,4 +24,30 @@ NTSTATUS LdrpLoadWow64(PWCHAR DllPath) {
 exit:
 	return retVal;
 	
+}
+
+void RtlInitUnicodeString(OUT UNICODE_STRING* DestinationString, IN OPTIONAL PWSTR SourceString) {
+	if (DestinationString == NULL) {
+		return;
+	}
+
+	DestinationString->Length = 0;
+	DestinationString->MaximumLength = 0;
+	DestinationString->Buffer = SourceString;
+
+	if (SourceString == NULL) {
+		return;
+	}
+	
+	size_t i = 0;
+	for (; *SourceString != 0x00; i++) {
+		SourceString++;
+	}
+	i = i * 2;
+	if (i >= 65534) {
+		i = 65532;
+	}
+	DestinationString->Length = (USHORT)i;
+	DestinationString->MaximumLength = (USHORT)i + 2;
+
 }

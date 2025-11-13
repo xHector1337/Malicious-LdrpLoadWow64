@@ -1,0 +1,21 @@
+; Recieve the NTDLL's Handle by Walking the PEB
+; Tested on Windows 10 x64 22H2 only.
+; Muzaffer Umut Þahin <mailatmayinlutfen@gmail.com>
+
+.code
+
+public CustomGetModuleHandle
+
+CustomGetModuleHandle proc
+	push rcx
+	xor rcx,rcx
+	mov rax,qword ptr gs:[rcx+60h] ; PEB
+	mov rax, qword ptr [rax+18h] ; PEB->Ldr
+	mov rax, qword ptr [rax+20h] ; PEB->Ldr->InMemoryOrderModuleList
+	mov rax, qword ptr [rax]
+	mov rax, qword ptr [rax+20h] ; NTDLL Base Address
+	pop rcx
+	ret
+CustomGetModuleHandle endp
+
+end	
