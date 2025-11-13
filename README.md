@@ -23,7 +23,7 @@ I have some ideas, and contributors are welcome to work on these:
 - First of all, testing this on newer and older x64 systems is required to have a clear picture of the method's reliability. I have only tested this on **Microsoft Windows 10 Pro x64 Build 19045**.
 
 - ~~Achieving DLL Injection with this method without including any suspicious functions like **GetModuleHandle** and **GetProcAddress**.
-In my opinion, this can be achieved by writing a custom GetModuleHandle function and either a custom GetProcAddress or a copycat function of RtlInitUnicodeString in order to use in my LdrpLoadWow64 wrapper. (Writing a custom GetProcAddress function is another option, but I prefer having a custom RtlInitUnicodeString function.) **[I'm working on this.]**~~ [:white_check_mark:]
+In my opinion, this can be achieved by writing a custom GetModuleHandle function and either a custom GetProcAddress or a copycat function of RtlInitUnicodeString in order to use in my LdrpLoadWow64 wrapper. (Writing a custom GetProcAddress function is another option, but I prefer having a custom RtlInitUnicodeString function.) **[I'm working on this.]**~~ :white_check_mark:
 
 - Since **LdrpLoadWow64** doesn't return the attached DLL's handle and it is just a wrapper of **LdrpLoadDll**, a new function that returns the DLL's handle can be written by observing how it uses **LdrpLoadDll**.
 
