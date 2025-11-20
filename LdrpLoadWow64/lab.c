@@ -18,7 +18,10 @@ NTSTATUS LdrpLoadWow64(PWCHAR DllPath) {
 	LdrpLoadWow64 = (NTSTATUS(NTAPI*)(PUNICODE_STRING))((CHAR*)hNtdll + LdrpLoadWow64Offset);
 
 	RtlInitUnicodeString(&unicodeDllPath, DllPath);
-	
+	if (unicodeDllPath.Buffer == NULL || unicodeDllPath.Length == 0) {
+		goto exit;
+	}
+
 	retVal = LdrpLoadWow64(&unicodeDllPath);
 
 exit:
